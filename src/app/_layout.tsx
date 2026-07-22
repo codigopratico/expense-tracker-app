@@ -1,18 +1,28 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
+import { HeaderShownContext } from "expo-router/build/react-navigation";
+import { StatusBar } from 'expo-status-bar';
+import * as NavigationBar from 'expo-navigation-bar';
+import { PaperProvider, useTheme } from 'react-native-paper';
+import { primaryColor } from "@/constants";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+NavigationBar.setStyle("dark");
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const theme = useTheme();
+  theme.colors.primary = primaryColor;
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+    <PaperProvider
+    theme={theme}>
+      <StatusBar style="dark" />
+
+      <Stack
+      screenOptions={{
+        headerShown: false,
+        }}
+      >
+
+      </Stack>
+    </PaperProvider>
+  )
+  
 }
